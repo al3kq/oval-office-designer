@@ -5,7 +5,6 @@ import { CATALOG, clampMargin, footprint } from '../model/catalog'
 import { angleOf, clampToRoom, snapToWall } from '../model/geometry'
 import { useStore } from '../model/store'
 import type { Item } from '../model/types'
-import { useSceneDesign } from './DesignContext'
 import { FURNITURE } from './furniture'
 import { useWallVisible } from './Room'
 
@@ -20,7 +19,6 @@ interface DragState {
 }
 
 export function ItemNode({ item }: { item: Item }) {
-  const { interactive } = useSceneDesign()
   const selected = useStore((state) => state.selectedId === item.id)
   const select = useStore((state) => state.select)
   const beginGesture = useStore((state) => state.beginGesture)
@@ -53,7 +51,7 @@ export function ItemNode({ item }: { item: Item }) {
   const Component = FURNITURE[item.kind]
   return (
     <group ref={wallMounted ? wallRef : undefined} position={[item.x, item.y ?? 0, item.z]} rotation-y={item.rotY}
-      onPointerDown={interactive ? (event) => {
+      onPointerDown={(event) => {
         event.stopPropagation()
         select(item.id)
         const plane = new Plane(new Vector3(0, 1, 0), -(wallMounted ? (item.y ?? 0) : 0))
@@ -69,8 +67,8 @@ export function ItemNode({ item }: { item: Item }) {
         }
         ;(event.target as Element).setPointerCapture(event.pointerId)
         if (controls) controls.enabled = false
-      } : undefined}
-      onPointerMove={interactive ? (event) => {
+      }}
+      onPointerMove={(event) => {
         const current = drag.current
         if (!current || current.pointerId !== event.pointerId) return
         event.stopPropagation()
@@ -87,12 +85,12 @@ export function ItemNode({ item }: { item: Item }) {
           current.started = true
         }
         setItemTransient(item.id, position)
-      } : undefined}
-      onPointerUp={interactive ? endDrag : undefined}
-      onPointerCancel={interactive ? endDrag : undefined}
+      }}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
     >
       <Component item={item} dims={dims} />
-      {interactive && selected && <lineSegments geometry={edges} position-y={wallMounted ? 0 : dims.h / 2} raycast={() => null}>
+      {selected && <lineSegments geometry={edges} position-y={wallMounted ? 0 : dims.h / 2} raycast={() => null}>
         <lineBasicMaterial color="#3FA9F5" depthTest={false} />
       </lineSegments>}
     </group>

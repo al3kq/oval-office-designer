@@ -1,11 +1,9 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import { EffectComposer, N8AO } from '@react-three/postprocessing'
 import { ACESFilmicToneMapping, SRGBColorSpace, VSMShadowMap, type Vector3 } from 'three'
 import { useStore } from '../model/store'
-import type { Design } from '../model/types'
-import { DesignContext } from './DesignContext'
 import { ItemNode } from './ItemNode'
 import Room, { CutawayProvider } from './Room'
 
@@ -15,10 +13,10 @@ const CAMERA_VIEWS = {
   desk: { position: [0, 1.6, 4.6], target: [0, 1.2, -5] },
 } as const
 
-const interactiveCanvases: HTMLCanvasElement[] = []
+let screenshotCanvas: HTMLCanvasElement | null = null
 
 export function captureScreenshot(): string | null {
-  const canvas = interactiveCanvases[interactiveCanvases.length - 1]
+  const canvas = screenshotCanvas
   if (!canvas) return null
   try {
     return canvas.toDataURL('image/png')
@@ -30,11 +28,8 @@ export function captureScreenshot(): string | null {
 function ScreenshotCanvas() {
   const canvas = useThree((state) => state.gl.domElement)
   useEffect(() => {
-    interactiveCanvases.push(canvas)
-    return () => {
-      const index = interactiveCanvases.indexOf(canvas)
-      if (index !== -1) interactiveCanvases.splice(index, 1)
-    }
+    screenshotCanvas = canvas
+    return () => { if (screenshotCanvas === canvas) screenshotCanvas = null }
   }, [canvas])
   return null
 }
@@ -55,8 +50,8 @@ function CameraView() {
   return null
 }
 
-function Contents({ design, interactive, quality }: { design: Design; interactive: boolean; quality: 'high' | 'low' }) {
-  const context = useMemo(() => ({ design, interactive }), [design, interactive])
+function Contents({ quality }: { quality: 'high' | 'low' }) {
+  const items = useStore((state) => state.design.items)
   const shadowSize = quality === 'high' ? 2048 : 1024
   return <>
     <color attach="background" args={['#e9e8e3']} />
@@ -73,26 +68,23 @@ function Contents({ design, interactive, quality }: { design: Design; interactiv
     </Environment>
     <OrbitControls makeDefault enableDamping maxPolarAngle={Math.PI / 2.05}
       minDistance={2} maxDistance={25} />
-    {interactive && <><CameraView /><ScreenshotCanvas /></>}
-    <DesignContext.Provider value={context}>
-      <CutawayProvider>
-        <Room />
-        {design.items.map((item) => <ItemNode key={item.id} item={item} />)}
-      </CutawayProvider>
-    </DesignContext.Provider>
+    <CameraView /><ScreenshotCanvas />
+    <CutawayProvider>
+      <Room />
+      {items.map((item) => <ItemNode key={item.id} item={item} />)}
+    </CutawayProvider>
     {quality === 'high' && <EffectComposer><N8AO aoRadius={0.5} distanceFalloff={1} intensity={1} /></EffectComposer>}
   </>
 }
 
-export function Scene({ design, interactive = true }: { design?: Design; interactive?: boolean }) {
-  const storeDesign = useStore((state) => state.design)
+export function Scene() {
   const quality = useStore((state) => state.quality)
   const select = useStore((state) => state.select)
   return <Canvas shadows={{ type: VSMShadowMap }} dpr={quality === 'high' ? [1, 2] : 1}
     camera={{ position: [7, 9, 9], fov: 45 }}
     gl={{ preserveDrawingBuffer: true, toneMapping: ACESFilmicToneMapping, outputColorSpace: SRGBColorSpace }}
-    onPointerMissed={() => { if (interactive) select(null) }}>
-    <Contents design={design ?? storeDesign} interactive={interactive} quality={quality} />
+    onPointerMissed={() => select(null)}>
+    <Contents quality={quality} />
   </Canvas>
 }
 

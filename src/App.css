@@ -36,19 +36,15 @@
 .catalog-button:hover { border-color: #a7b8a7; background: #eef3eb; }
 .scene-area { position: relative; min-width: 0; min-height: 0; overflow: hidden; background: #eef0f2; }
 .scene-area canvas { display: block; }
-.scene-views { display: flex; width: 100%; height: 100%; }
-.scene-view { position: relative; flex: 1 1 0; min-width: 0; min-height: 0; }
-.scene-view--comparison { border-left: 2px solid #fff; }
 .scene-loading { display: grid; height: 100%; place-items: center; color: #57645c; font-size: 13px; }
-.compare-controls { position: absolute; top: 12px; right: 12px; z-index: 2; display: flex; align-items: end; gap: 6px; max-width: calc(100% - 24px); padding: 6px; border-radius: 7px; background: #fffffff2; box-shadow: 0 4px 20px #35423b1c; }
-.compare-controls label { display: flex; align-items: center; gap: 6px; min-width: 0; color: #57645c; font-size: 11px; font-weight: 700; }
-.compare-controls select { max-width: min(240px, 40vw); padding: 6px; border: 1px solid #dedfd7; border-radius: 5px; background: white; color: #34463c; }
-.compare-controls button { padding: 7px; border: 1px solid #dedfd7; border-radius: 5px; background: white; color: #34463c; font-size: 11px; white-space: nowrap; }
-.comparison-label { position: absolute; left: 12px; bottom: 16px; max-width: calc(100% - 24px); padding: 8px 10px; border-radius: 6px; background: #fffffff0; color: #30483b; font-size: 11px; font-weight: 700; }
-.comparison-label span { display: block; color: #7a887e; font-weight: 400; }
-.scene-info { position: absolute; top: 60px; left: 20px; max-width: min(370px, calc(100% - 40px)); pointer-events: none; }
-.era-info { pointer-events: auto; padding: 16px 18px; border: 1px solid #ffffffb8; border-radius: 9px; background: #fffffff0; box-shadow: 0 5px 24px #33413a12; color: #65716a; font-size: 11px; line-height: 1.55; }
-.era-info-heading { margin: 0 0 8px; color: #30483b; font: 700 14px/1.4 'Libre Baskerville', Georgia, serif; }
+.scene-info { position: absolute; top: 16px; left: 20px; max-width: min(370px, calc(100% - 40px)); pointer-events: none; }
+.era-info { pointer-events: auto; max-height: min(60vh, 400px); overflow-y: auto; overscroll-behavior: contain; padding: 12px 16px; border: 1px solid #ffffffb8; border-radius: 9px; background: #fffffff0; box-shadow: 0 5px 24px #33413a12; color: #65716a; font-size: 11px; line-height: 1.55; }
+.era-info-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; color: #30483b; cursor: pointer; list-style: none; font: 700 14px/1.4 'Libre Baskerville', Georgia, serif; }
+.era-info-heading::-webkit-details-marker { display: none; }
+.era-info-heading:focus-visible { outline: 2px solid #526d5b; outline-offset: 4px; border-radius: 2px; }
+.era-info-toggle::after { content: '+'; font: 600 20px/1 sans-serif; }
+.era-info[open] .era-info-toggle::after { content: '−'; }
+.era-info[open] .era-info-heading { margin-bottom: 8px; }
 .era-info p { margin: 6px 0; }
 .era-info-sources { color: #879189; overflow-wrap: anywhere; }
 .camera-controls { position: absolute; right: 20px; bottom: 20px; display: flex; padding: 4px; gap: 2px; border: 1px solid #fff; border-radius: 8px; background: #fffffff0; box-shadow: 0 4px 20px #35423b1c; }
@@ -92,18 +88,15 @@
   .share-popover { position: fixed; top: 50%; left: 50%; right: auto; width: min(300px, calc(100vw - 32px)); transform: translate(-50%, -50%); z-index: 10; }
   .workspace { display: flex; flex-direction: column; }
   .scene-area { order: 0; height: 58vh; min-height: 390px; }
-  .scene-area--compare { height: 110vh; min-height: 780px; }
-  .scene-area--compare .scene-views { flex-direction: column; }
-  .scene-view--comparison { border-left: 0; border-top: 2px solid #fff; }
   .sidebar-left { order: 1; border-right: 0; border-bottom: 1px solid #e2e4dc; }
   .sidebar-right { order: 2; border-left: 0; }
   .sidebar-content { overflow: visible; }
   .era-timeline { display: flex; gap: 6px; overflow-x: auto; padding: 12px 16px; }
   .era-button { width: 170px; flex: 0 0 170px; }
   .catalog-items { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
-  .scene-info { top: 58px; left: 12px; max-width: min(290px, calc(100% - 24px)); }
-  .era-info { max-height: 112px; overflow-y: auto; overscroll-behavior: contain; padding: 10px 12px; font-size: 11px; }
-  .era-info-heading { margin-bottom: 4px; font-size: 13px; }
+  .scene-info { top: 12px; left: 12px; max-width: min(290px, calc(100% - 24px)); }
+  .era-info { max-height: min(42vh, 250px); padding: 10px 12px; font-size: 11px; }
+  .era-info-heading { font-size: 13px; }
   .camera-controls { right: 12px; bottom: 12px; }
   .camera-controls button { min-height: 40px; }
 }

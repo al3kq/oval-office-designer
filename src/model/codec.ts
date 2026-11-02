@@ -28,9 +28,9 @@ function parseFinishes(rawValue: unknown): Finishes | null {
       !isHex(value.drapeColor) || !isHex(value.drapeAccent) ||
       !isOneOf(value.drapeStyle, ['panel', 'swag'] as const) ||
       !isHex(rug.base) || !isHex(rug.border) || !isHex(rug.accent) ||
-      !isOneOf(rug.pattern, ['plain', 'lattice', 'stars', 'star-ring', 'sunburst', 'laurel', 'laurel-stars', 'quotes'] as const) ||
+      !isOneOf(rug.pattern, ['plain', 'lattice', 'stars', 'star-ring', 'sunburst', 'sunburst-laurel', 'laurel', 'laurel-stars', 'quotes'] as const) ||
       !isOneOf(rug.seal, ['none', 'tone', 'color', 'gold'] as const) ||
-      !isOneOf(ceiling, ['plain', 'seal'] as const) || typeof chandelier !== 'boolean' ||
+      !isOneOf(ceiling, ['plain', 'seal', 'gold-seal'] as const) || typeof chandelier !== 'boolean' ||
       !isOneOf(mantelDecor, ['none', 'classic', 'gold'] as const) ||
       !isOneOf(borderStyle, ['band', 'double', 'greek-key', 'scallop'] as const) ||
       typeof text !== 'string') return null;

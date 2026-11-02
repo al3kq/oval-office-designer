@@ -1,5 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
-import { designFromEra, ERAS } from './data/eras'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { useStore } from './model/store'
 import Toolbar from './ui/Toolbar'
 import EraTimeline from './ui/EraTimeline'
@@ -17,10 +16,6 @@ function App() {
   const selectedId = useStore((state) => state.selectedId)
   const cameraPreset = useStore((state) => state.cameraPreset)
   const setCamera = useStore((state) => state.setCamera)
-  const compareEraId = useStore((state) => state.compareEraId)
-  const setCompare = useStore((state) => state.setCompare)
-  const compareEra = ERAS.find((era) => era.id === compareEraId)
-  const compareDesign = useMemo(() => compareEra ? designFromEra(compareEra) : null, [compareEra])
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -65,31 +60,14 @@ function App() {
           </div>
           <div className="sidebar-content" role="tabpanel">{tab === 'eras' ? <EraTimeline /> : <Catalog />}</div>
         </aside>
-        <section className={`scene-area${compareDesign ? ' scene-area--compare' : ''}`} aria-label="3D Oval Office designer">
-          <div className="compare-controls">
-            <label>Compare with
-              <select value={compareEraId ?? ''} onChange={(event) => setCompare(event.target.value || null)}>
-                <option value="">Choose an era</option>
-                {ERAS.map((era) => <option key={era.id} value={era.id}>{era.president} · {era.years}</option>)}
-              </select>
-            </label>
-            {compareDesign && <button type="button" onClick={() => setCompare(null)}>Close comparison</button>}
-          </div>
-          <div className="scene-views">
-            <div className="scene-view scene-view--editable">
-              <Suspense fallback={<div className="scene-loading" role="status">Loading 3D scene…</div>}><Scene /></Suspense>
-              <div className="scene-info"><EraInfo /></div>
-              <div className="scene-hint">Drag to orbit · Scroll to zoom · Select an object to edit</div>
-              <div className="camera-controls" aria-label="Camera views">
-                {([{ id: 'overview', label: 'Overview' }, { id: 'top', label: 'Top' }, { id: 'desk', label: 'Desk' }] as const).map((view) => (
-                  <button type="button" key={view.id} aria-pressed={cameraPreset === view.id} onClick={() => setCamera(view.id)}>{view.label}</button>
-                ))}
-              </div>
-            </div>
-            {compareDesign && compareEra && <div className="scene-view scene-view--comparison">
-              <Suspense fallback={<div className="scene-loading" role="status">Loading comparison…</div>}><Scene design={compareDesign} interactive={false} /></Suspense>
-              <div className="comparison-label">Comparison · {compareEra.president} · {compareEra.years} <span>Read-only</span></div>
-            </div>}
+        <section className="scene-area" aria-label="3D Oval Office designer">
+          <Suspense fallback={<div className="scene-loading" role="status">Loading 3D scene…</div>}><Scene /></Suspense>
+          <div className="scene-info"><EraInfo /></div>
+          <div className="scene-hint">Drag to orbit · Scroll to zoom · Select an object to edit</div>
+          <div className="camera-controls" aria-label="Camera views">
+            {([{ id: 'overview', label: 'Overview' }, { id: 'top', label: 'Top' }, { id: 'desk', label: 'Desk' }] as const).map((view) => (
+              <button type="button" key={view.id} aria-pressed={cameraPreset === view.id} onClick={() => setCamera(view.id)}>{view.label}</button>
+            ))}
           </div>
         </section>
         <aside className="sidebar sidebar-right" aria-label={selectedId ? 'Selected item' : 'Room finishes'}>

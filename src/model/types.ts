@@ -17,7 +17,7 @@ export interface Item {
   pattern: FabricPattern
 }
 
-export type RugPattern = 'plain' | 'lattice' | 'stars' | 'star-ring' | 'sunburst' | 'laurel' | 'laurel-stars' | 'quotes'
+export type RugPattern = 'plain' | 'lattice' | 'stars' | 'star-ring' | 'sunburst' | 'sunburst-laurel' | 'laurel' | 'laurel-stars' | 'quotes'
 export type SealStyle = 'none' | 'tone' | 'color' | 'gold'
 export type RugBorderStyle = 'band' | 'double' | 'greek-key' | 'scallop'
 export interface RugSpec {
@@ -31,7 +31,7 @@ export interface RugSpec {
   text: string
 }
 export type WallPattern = 'plain' | 'stripe' | 'damask' | 'panel' | 'fleur' | 'trellis' | 'grasscloth'
-export type CeilingStyle = 'plain' | 'seal'
+export type CeilingStyle = 'plain' | 'seal' | 'gold-seal'
 export type MantelDecor = 'none' | 'classic' | 'gold'
 export interface Finishes {
   room: '1909' | '1934'

@@ -75,6 +75,7 @@ export const CATALOG: Record<ItemKind, KindDef> = {
     { id: 'bust-bronze', label: 'Bronze bust', w: 0.45, d: 0.45, h: 1.6 },
     { id: 'bust-marble', label: 'Marble bust', w: 0.45, d: 0.45, h: 1.6 },
     { id: 'bronco', label: 'Bronco Buster', note: 'Remington Bronco Buster', story: 'Frederic Remington’s bronze depicts a cowboy breaking a rearing horse.', w: 0.45, d: 0.45, h: 1.6 },
+    { id: 'american-patriot', label: 'Spread-wing eagle', note: 'Stylized interpretation, not an exact likeness', story: 'A gold eagle sculpture was displayed in the Oval Office during Donald Trump’s second term. Source: https://apnews.com/article/trump-peoples-house-gold-oval-office-replica-f20fbcd0c51483a6d12ce361b690ea80', w: 1.0, d: 0.45, h: 1.6 },
     { id: 'churchill', label: 'Winston Churchill bust', story: 'Jacob Epstein sculpted this bust of British prime minister Winston Churchill.', w: 0.45, d: 0.45, h: 1.6 },
     { id: 'mlk', label: 'Martin Luther King Jr. bust', story: 'The civil rights leader Martin Luther King Jr. has been honored with a bust in the Oval Office.', w: 0.45, d: 0.45, h: 1.6 },
     { id: 'lincoln', label: 'Abraham Lincoln bust', story: 'Abraham Lincoln led the United States through the Civil War and issued the Emancipation Proclamation.', w: 0.45, d: 0.45, h: 1.6 },
@@ -82,7 +83,7 @@ export const CATALOG: Record<ItemKind, KindDef> = {
     { id: 'cesar-chavez', label: 'Cesar Chavez bust', story: 'Cesar Chavez co-founded the United Farm Workers and organized for farmworkers’ rights.', w: 0.45, d: 0.45, h: 1.6 },
   ] },
   globe: { label: 'Globe', category: 'Decor', mount: 'floor', defaultColor: '#2E5E8C', defaultAccent: '#5A3220', variants: [
-    { id: 'fdr', label: 'FDR globe', note: "FDR's WWII globe", story: 'Franklin D. Roosevelt used a large globe during World War II.', w: 0.9, d: 0.9, h: 1.2 },
+    { id: 'fdr', label: 'FDR globe', note: "FDR's WWII globe", story: 'Franklin D. Roosevelt received a 50-inch globe during World War II.', w: 1.27, d: 1.27, h: 1.7 },
   ] },
   'tv-console': { label: 'TV console', category: 'Decor', mount: 'floor', defaultColor: '#F4F1E8', defaultAccent: '#202020', variants: [
     { id: 'lbj', label: 'LBJ three-TV console', note: "LBJ's three-TV console", story: 'Lyndon B. Johnson used three televisions to follow news broadcasts at once.', w: 1.6, d: 0.5, h: 1.1 },
@@ -92,6 +93,7 @@ export const CATALOG: Record<ItemKind, KindDef> = {
     { id: 'landscape', label: 'Landscape', w: 1.2, d: 0.06, h: 0.8 },
     { id: 'seascape', label: 'Seascape', w: 1.2, d: 0.06, h: 0.8 },
     { id: 'washington-peale', label: 'Washington by Rembrandt Peale', story: 'Rembrandt Peale painted George Washington within a trompe-l’œil stone porthole.', w: 0.9, d: 0.06, h: 1.1 },
+    { id: 'washington-charles-peale', label: 'Washington, military portrait', story: 'A military portrait of Washington by Charles Willson Peale hung above the Oval Office fireplace under Nixon and was reported there again in March 2025.', w: 0.9, d: 0.06, h: 1.1 },
     { id: 'fdr-portrait', label: 'Franklin D. Roosevelt portrait', story: 'Franklin D. Roosevelt moved the Oval Office to its present location in 1934.', w: 0.8, d: 0.06, h: 1.0 },
     { id: 'emancipation', label: 'Emancipation Proclamation', story: 'Abraham Lincoln issued the Emancipation Proclamation during the Civil War.', w: 0.7, d: 0.06, h: 0.9 },
     { id: 'hassam-flags', label: 'The Avenue in the Rain', story: 'Childe Hassam painted The Avenue in the Rain, a view of flag-lined Fifth Avenue.', w: 0.9, d: 0.06, h: 1.2 },

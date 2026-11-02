@@ -26,7 +26,7 @@ export default function FinishesPanel() {
     <h3>Ceiling &amp; mantel</h3>
     <label className="field">Ceiling
       <select value={finishes.ceiling} onChange={(event) => setFinishes({ ceiling: event.target.value as Finishes['ceiling'] })}>
-        <option value="plain">Plain</option><option value="seal">Presidential seal</option>
+        <option value="plain">Plain</option><option value="seal">Presidential seal</option><option value="gold-seal">Gold-accented seal &amp; ornament</option>
       </select>
     </label>
     <label className="checkbox-field"><input type="checkbox" checked={finishes.chandelier} onChange={(event) => setFinishes({ chandelier: event.target.checked })} /> Chandelier</label>
@@ -68,7 +68,7 @@ export default function FinishesPanel() {
     </div>
     <label className="field">Rug pattern
       <select value={finishes.rug.pattern} onChange={(event) => setRug({ pattern: event.target.value as RugPattern })}>
-        <option value="plain">Plain</option><option value="lattice">Lattice</option><option value="stars">Stars</option><option value="star-ring">Star ring</option><option value="sunburst">Sunburst</option><option value="laurel">Laurel</option><option value="laurel-stars">Laurel and stars</option><option value="quotes">Quotes</option>
+        <option value="plain">Plain</option><option value="lattice">Lattice</option><option value="stars">Stars</option><option value="star-ring">Star ring</option><option value="sunburst">Sunburst</option><option value="sunburst-laurel">Sunburst and olive branches</option><option value="laurel">Laurel</option><option value="laurel-stars">Laurel and stars</option><option value="quotes">Quotes</option>
       </select>
     </label>
     <label className="field">Rug border style

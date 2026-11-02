@@ -84,6 +84,18 @@ function Plant({ item, dims: { h } }: Props) {
   return <><Cylinder radius={0.22} topRadius={0.28} height={0.4} at={[0, 0.2, 0]} color={item.accent} /><Cylinder radius={0.035} height={h * 0.65} at={[0, h * 0.43, 0]} color="#5A3220" /><Ball radius={0.34} at={[0, h - 0.34, 0]} color={item.color} /><Ball radius={0.27} at={[-0.23, h - 0.62, 0]} color={item.color} /><Ball radius={0.27} at={[0.23, h - 0.68, 0]} color={item.color} /></>
 }
 function Sculpture({ item }: Props) {
+  if (item.variant === 'american-patriot') return <>
+    <Box size={[0.4, 0.07, 0.4]} at={[0, 0.035, 0]} color={item.accent} />
+    <Box size={[0.32, 1.02, 0.32]} at={[0, 0.57, 0]} color={item.accent} />
+    <Box size={[0.4, 0.06, 0.4]} at={[0, 1.11, 0]} color={item.accent} />
+    <Ball radius={0.13} scale={[0.8, 1.2, 0.7]} at={[0, 1.32, 0]} color={item.color} metal />
+    <Ball radius={0.065} at={[0, 1.5, 0.02]} color={item.color} metal />
+    <Ball radius={0.035} scale={[0.7, 0.65, 1.3]} at={[0, 1.48, 0.09]} color={item.color} metal />
+    {[-1, 1].map(side => <group key={side} position={[side * 0.11, 1.39, 0]} rotation={[0, 0, -side * 0.28]}>
+      <Ball radius={0.15} scale={[1.5, 0.4, 0.35]} at={[side * 0.14, 0, 0]} color={item.color} metal />
+      {[0, 1, 2].map(i => <Ball key={i} radius={0.09} scale={[1.25, 0.25, 0.35]} at={[side * (0.12 + i * 0.055), -0.045 - i * 0.025, 0.015]} color={item.color} metal />)}
+    </group>)}
+  </>
   const bronze = ['churchill', 'mlk', 'cesar-chavez', 'rosa-parks', 'bust-bronze', 'bronco'].includes(item.variant)
   const color = item.variant === 'bust-marble' || item.variant === 'lincoln' ? '#e7e3da' : bronze ? '#765b42' : item.color
   const isLincoln = item.variant === 'lincoln'

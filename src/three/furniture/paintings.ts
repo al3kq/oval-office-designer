@@ -1,7 +1,7 @@
 import { CanvasTexture, SRGBColorSpace } from 'three'
 
 const cache = new Map<string, CanvasTexture>()
-const variants: Record<string, true> = { 'washington-peale': true, 'fdr-portrait': true, emancipation: true, 'hassam-flags': true }
+const variants: Record<string, true> = { 'washington-peale': true, 'washington-charles-peale': true, 'fdr-portrait': true, emancipation: true, 'hassam-flags': true }
 
 export function historicalPaintingTexture(variant: string): CanvasTexture | undefined {
   if (!variants[variant]) return undefined
@@ -54,6 +54,18 @@ export function historicalPaintingTexture(variant: string): CanvasTexture | unde
     ctx.strokeStyle = 'rgba(230,235,230,.4)'
     ctx.lineWidth = 2
     for (let i = 0; i < 70; i++) { const x = (i * 83) % 512; const y = (i * 137) % 640; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - 9, y + 42); ctx.stroke() }
+  } else if (variant === 'washington-charles-peale') {
+    // A symbolic military portrait, not a reproduction of the historic painting.
+    fill('#474138', 0, 0, 512, 640)
+    fill('#3b463d', 0, 400, 512, 240)
+    ellipse('#243d58', 256, 530, 150, 190)
+    ellipse('#cfb091', 256, 262, 69, 95)
+    ellipse('#d5cfc1', 256, 194, 72, 37)
+    fill('#e9e0c8', 230, 335, 52, 100)
+    fill('#a8904e', 144, 401, 34, 90)
+    fill('#a8904e', 335, 401, 34, 90)
+    ctx.strokeStyle = '#c6ae6c'; ctx.lineWidth = 8
+    ctx.beginPath(); ctx.moveTo(332, 470); ctx.lineTo(418, 625); ctx.stroke()
   } else {
     const washington = variant === 'washington-peale'
     fill(washington ? '#b5aba0' : '#393b37', 0, 0, 512, 640)

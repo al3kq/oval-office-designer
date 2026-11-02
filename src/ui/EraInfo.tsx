@@ -1,4 +1,5 @@
 import { ERA_BY_ID } from '../data/eras';
+import { ERA_EVIDENCE } from '../data/accuracy';
 import { useStore } from '../model/store';
 import type { Finishes } from '../model/types';
 
@@ -26,11 +27,13 @@ export default function EraInfo() {
     });
 
   return (
-    <aside className="era-info" aria-label="Era information">
-      <h2 className="era-info-heading">
-        {era.president} · {era.years}{modified && ' (modified)'}
-      </h2>
+    <details className="era-info" aria-label="Era information">
+      <summary className="era-info-heading">
+        <span>{era.president} · {era.years}{modified && ' (modified)'}</span>
+        <span className="era-info-toggle" aria-hidden="true" />
+      </summary>
       <p>{era.blurb}</p>
+      {ERA_EVIDENCE[era.id] && <p>{ERA_EVIDENCE[era.id].note}</p>}
       <p>Approximate reconstruction — colors and positions are estimated.</p>
       <div className="era-info-sources">
         Sources:{' '}
@@ -41,6 +44,6 @@ export default function EraInfo() {
           </span>
         ))}
       </div>
-    </aside>
+    </details>
   );
 }

@@ -5,7 +5,8 @@ import { BufferGeometry, CanvasTexture, CircleGeometry, Float32BufferAttribute, 
 import { ARCH_FEATURES, RX, RZ, WALL_H, WALL_T, wall, wallNormal, wallPoint } from '../model/geometry'
 import type { ArchFeature } from '../model/geometry'
 import type { Finishes } from '../model/types'
-import { CutawayContext, useSceneDesign } from './DesignContext'
+import { CutawayContext } from './CutawayContext'
+import { useStore } from '../model/store'
 import { marbleTexture, plankTexture, rugTexture, wallTexture } from './textures'
 
 const SEGMENTS = 72
@@ -104,11 +105,28 @@ function DoorFeature({ feature, finishes }: { feature: ArchFeature; finishes: Fi
   return <>
     <Box position={[0, h / 2, 0]} size={[w + 0.2, h + 0.12, 0.08]} color={finishes.trimColor} />
     <Box position={[0, h + 0.18, 0.02]} size={[w + 0.4, 0.25, 0.14]} color={finishes.trimColor} />
+    {finishes.ceiling === 'gold-seal' && <DoorGilt width={w} height={h} />}
     {[-1, 1].map(side => <group key={side}>
       <Box position={[side * w / 4, h / 2, 0.06]} size={[w / 2 - 0.04, h - 0.08, 0.06]} color="#f7f5ef" />
       {feature.deg === 100 && <mesh position={[side * w / 4, h * 0.62, 0.1]}><planeGeometry args={[w / 2 - 0.16, h * 0.65]} /><meshPhysicalMaterial color="#dcebf7" emissive="#dcebf7" emissiveIntensity={0.5} transmission={0.12} roughness={0.12} /></mesh>}
     </group>)}
   </>
+}
+
+// Shallow relief stays close to the door and shares its cutaway visibility.
+function DoorGilt({ width, height }: { width: number; height: number }) {
+  const gold = '#c9a43a'
+  return <group position={[0, height + 0.34, 0.1]}>
+    <mesh position={[0, 0.02, 0]}><boxGeometry args={[width + 0.3, 0.045, 0.035]} /><meshStandardMaterial color={gold} metalness={0.7} roughness={0.3} /></mesh>
+    <mesh position={[0, 0.22, 0]} scale={[0.14, 0.19, 0.035]}><sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color={gold} metalness={0.7} roughness={0.3} /></mesh>
+    {[-1, 1].map(side => <group key={side} position={[side * 0.42, 0.17, 0]}>
+      {/* Mirrored heads, reclining bodies and raised wings suggest cherub reliefs. */}
+      <mesh position={[-side * 0.14, 0.13, 0]} scale={[0.075, 0.075, 0.035]}><sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color={gold} metalness={0.7} roughness={0.3} /></mesh>
+      <mesh rotation-z={side * 0.2} scale={[0.19, 0.075, 0.035]}><sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color={gold} metalness={0.7} roughness={0.3} /></mesh>
+      <mesh position={[side * 0.08, 0.13, -0.005]} rotation-z={-side * 0.6} scale={[0.08, 0.18, 0.025]}><sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color={gold} metalness={0.7} roughness={0.3} /></mesh>
+      <mesh position={[side * 0.24, -0.03, 0]} rotation-z={side * 0.3} scale={[0.13, 0.035, 0.025]}><sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color={gold} metalness={0.7} roughness={0.3} /></mesh>
+    </group>)}
+  </group>
 }
 
 function Fireplace({ finishes }: { finishes: Finishes }) {
@@ -149,12 +167,13 @@ function Ceiling({ finishes }: { finishes: Finishes }) {
   return <>
     <group ref={ref}>
       <mesh position-y={WALL_H} rotation-x={Math.PI / 2} scale={[RX, RZ, 1]}><circleGeometry args={[1, 128]} /><meshStandardMaterial color="#f3f0e7" roughness={0.9} /></mesh>
-      {finishes.ceiling === 'seal' && <group position={[0, WALL_H - 0.025, 0]}>
+      {finishes.ceiling !== 'plain' && <group position={[0, WALL_H - 0.025, 0]}>
         <mesh><cylinderGeometry args={[0.95, 0.95, 0.05, 48]} /><meshStandardMaterial color="#e5e0d4" roughness={0.8} /></mesh>
         <mesh position-y={-0.04}><cylinderGeometry args={[0.77, 0.77, 0.04, 48]} /><meshStandardMaterial color="#f6f2e9" roughness={0.8} /></mesh>
-        <mesh position={[0, -0.08, 0]} scale={[0.17, 0.04, 0.3]}><sphereGeometry args={[1, 20, 12]} /><meshStandardMaterial color="#ded8ca" /></mesh>
-        {[-1, 1].map(side => <mesh key={side} position={[side * 0.3, -0.08, -0.03]} rotation-y={side * 0.25} scale={[0.38, 0.04, 0.13]}><sphereGeometry args={[1, 20, 12]} /><meshStandardMaterial color="#ded8ca" /></mesh>)}
-        <mesh position={[0, -0.08, -0.32]} scale={[0.09, 0.04, 0.09]}><sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color="#ded8ca" /></mesh>
+        {finishes.ceiling === 'gold-seal' && <mesh position-y={-0.065} rotation-x={Math.PI / 2}><torusGeometry args={[0.83, 0.025, 12, 64]} /><meshStandardMaterial color="#c9a43a" metalness={0.7} roughness={0.3} /></mesh>}
+        <mesh position={[0, -0.08, 0]} scale={[0.17, 0.04, 0.3]}><sphereGeometry args={[1, 20, 12]} /><meshStandardMaterial color={finishes.ceiling === 'gold-seal' ? '#c9a43a' : '#ded8ca'} /></mesh>
+        {[-1, 1].map(side => <mesh key={side} position={[side * 0.3, -0.08, -0.03]} rotation-y={side * 0.25} scale={[0.38, 0.04, 0.13]}><sphereGeometry args={[1, 20, 12]} /><meshStandardMaterial color={finishes.ceiling === 'gold-seal' ? '#c9a43a' : '#ded8ca'} /></mesh>)}
+        <mesh position={[0, -0.08, -0.32]} scale={[0.09, 0.04, 0.09]}><sphereGeometry args={[1, 16, 12]} /><meshStandardMaterial color={finishes.ceiling === 'gold-seal' ? '#c9a43a' : '#ded8ca'} /></mesh>
       </group>}
     </group>
     {finishes.chandelier && <group position={[0, WALL_H - 0.55, 0]}>
@@ -198,7 +217,7 @@ function Feature({ feature, finishes }: { feature: ArchFeature; finishes: Finish
 }
 
 export default function Room() {
-  const { design: { finishes } } = useSceneDesign()
+  const finishes = useStore((state) => state.design.finishes)
   const wallMap = useMemo(() => wallTexture(finishes.wallPattern, finishes.wallColor, finishes.wallAccent), [finishes.wallPattern, finishes.wallColor, finishes.wallAccent])
   const floorMap = useMemo(() => plankTexture(finishes.floorColor), [finishes.floorColor])
   const rugMap = useMemo(() => rugTexture(finishes.rug), [finishes.rug])

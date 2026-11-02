@@ -16,9 +16,7 @@ interface Store {
   toast: string | null;
   eraLoadedAtPast: number;
   quality: 'high' | 'low';
-  compareEraId: string | null;
   setQuality: (quality: 'high' | 'low') => void;
-  setCompare: (id: string | null) => void;
   loadDesign: (design: Design) => void;
   loadEra: (id: string) => void;
   addItem: (kind: ItemKind) => void;
@@ -53,12 +51,11 @@ export const useStore = create<Store>((set, get) => {
     design: designFromEra(ERAS[ERAS.length - 1]),
     selectedId: null, past: [], future: [], cameraPreset: 'overview', cameraNonce: 0,
     toast: null, eraLoadedAtPast: 0,
-    quality: loadQuality(), compareEraId: null,
+    quality: loadQuality(),
     setQuality: (quality) => {
       try { localStorage.setItem('oval-designer:quality', quality); } catch { /* Storage may be unavailable. */ }
       set({ quality });
     },
-    setCompare: (compareEraId) => set({ compareEraId }),
     loadDesign: (design) => commit(design, { selectedId: null }),
     loadEra: (id) => {
       const era = ERA_BY_ID[id];

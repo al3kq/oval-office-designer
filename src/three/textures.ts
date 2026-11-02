@@ -130,7 +130,7 @@ export function rugTexture(spec: RugSpec): CanvasTexture {
         const a = i * Math.PI * 2 / 48
         star(ctx, 1024 + Math.cos(a) * 840, 1024 + Math.sin(a) * 840, 28, accent)
       }
-    } else if (pattern === 'sunburst') {
+    } else if (pattern === 'sunburst' || pattern === 'sunburst-laurel') {
       ctx.fillStyle = accent
       for (let i = 0; i < 64; i++) {
         const a = i * Math.PI * 2 / 64
@@ -139,8 +139,8 @@ export function rugTexture(spec: RugSpec): CanvasTexture {
     }
     ctx.restore()
     if (border.toLowerCase() !== base.toLowerCase() || pattern !== 'plain') {
-      ellipseStroke(ctx, 942, border, 90)
-      ellipseStroke(ctx, 894, accent, 6); ellipseStroke(ctx, 990, accent, 6)
+      ellipseStroke(ctx, 942, pattern === 'sunburst-laurel' ? base : border, 90)
+      ellipseStroke(ctx, 894, pattern === 'sunburst-laurel' ? border : accent, 6); ellipseStroke(ctx, 990, pattern === 'sunburst-laurel' ? border : accent, 6)
     }
     if (spec.borderStyle === 'double') {
       ellipseStroke(ctx, 918, accent, 7)
@@ -160,8 +160,8 @@ export function rugTexture(spec: RugSpec): CanvasTexture {
         ctx.beginPath(); ctx.ellipse(0, 0, 22, 28, 0, -Math.PI / 2, Math.PI / 2); ctx.stroke(); ctx.restore()
       }
     }
-    if (pattern === 'laurel' || pattern === 'laurel-stars') {
-      ctx.fillStyle = accent
+    if (pattern === 'laurel' || pattern === 'laurel-stars' || pattern === 'sunburst-laurel') {
+      ctx.fillStyle = pattern === 'sunburst-laurel' ? border : accent
       for (let i = 0; i < 96; i++) {
         const a = i * Math.PI * 2 / 96
         ctx.save(); ctx.translate(1024 + Math.cos(a) * 942, 1024 + Math.sin(a) * 942); ctx.rotate(a + (i % 2 ? 0.55 : -0.55)); ctx.beginPath(); ctx.ellipse(0, 0, 24, 8, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore()
