@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+ <rect width="1200" height="630" fill="#f4f1e8"/>
+ <rect x="24" y="24" width="1152" height="582" rx="16" fill="#263e32"/>
+ <rect x="40" y="40" width="1120" height="550" rx="9" fill="none" stroke="#b89d68" stroke-width="2"/>
+ <path d="M90 98h84" stroke="#d6ba7c" stroke-width="4"/>
+ <text x="90" y="160" fill="#d6ba7c" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="4">DESIGN THROUGH HISTORY</text>
+ <text x="90" y="250" fill="#fffdf5" font-family="Georgia,serif" font-size="62" font-weight="700">Oval Office</text>
+ <text x="90" y="325" fill="#fffdf5" font-family="Georgia,serif" font-size="62" font-weight="700">Designer</text>
+ <text x="92" y="389" fill="#d9e0d5" font-family="Arial,sans-serif" font-size="22">Explore the eras. Make the room your own.</text>
+ <path d="M90 491h290" stroke="#718578" stroke-width="2"/>
+ <text x="92" y="532" fill="#d6ba7c" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">AN INTERACTIVE 3D EXPERIENCE</text>
+ <ellipse cx="886" cy="315" rx="220" ry="258" fill="#e5dcc6" stroke="#c8ad75" stroke-width="8"/>
+ <ellipse cx="886" cy="315" rx="193" ry="230" fill="#f6f2e5" stroke="#af9260" stroke-width="3"/>
+ <ellipse cx="886" cy="315" rx="156" ry="190" fill="#d8c69e" stroke="#b39359" stroke-width="4"/>
+ <ellipse cx="886" cy="315" rx="137" ry="169" fill="#f2e8d0" stroke="#b39359" stroke-width="2"/>
+ <path d="M790 275h192v78H790z" fill="#79583c" stroke="#4c3627" stroke-width="5"/>
+ <path d="M808 289h156v48H808z" fill="#a17d54" stroke="#c8ad75" stroke-width="2"/>
+ <path d="M810 353v16m152-16v16" stroke="#4c3627" stroke-width="8" stroke-linecap="round"/>
+ <path d="M850 245q36-24 72 0" fill="none" stroke="#809282" stroke-width="12" stroke-linecap="round"/>
+ <circle cx="886" cy="419" r="17" fill="#b39359"/><path d="M878 419h16m-8-8v16" stroke="#f2e8d0" stroke-width="2"/>
+</svg>
